@@ -4,12 +4,12 @@
              x:Class="DiceStats.MainPage"
              xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms">
 
-    <StackLayout>
+    <StackLayout Background="white">
         <ScrollView>
             <StackLayout>
-                <Label x:Name="Dice" FontSize="50" HorizontalOptions="Center" Text="Wylosuj liczbe"></Label>
+                <Label x:Name="Dice" TextColor="black" FontSize="50" HorizontalOptions="Center" Text="Wylosuj liczbe"></Label>
                 <Button FontSize="40" Text="Losuj" Clicked="Button_Clicked"></Button>
-                <microcharts:ChartView x:Name="chartViewBar" HeightRequest="300" />
+                <microcharts:ChartView x:Name="chartViewBar" HeightRequest="300" VerticalOptions="CenterAndExpand"/>
                 <microcharts:ChartView x:Name="chartViewPie" HeightRequest="300" />
             </StackLayout>
         </ScrollView>
