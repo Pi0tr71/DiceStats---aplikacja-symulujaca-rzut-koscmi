@@ -23,17 +23,24 @@ namespace DiceStats
                 Dane.start = false;
                 var Kolory = new string[11] { "d44de1", "#da2ea2", "df0e62", "e63d4d", "fac70b", "c0b329", "869f46", "4c8b64", "127681", "1a4766", "21174a" };
                 Dane.kolory = Kolory;
+                Accelerometer.ShakeDetected += Accelerometer_ShakeDetected;
+                Accelerometer.Start(SensorSpeed.UI);
             }
             else
             {
                 Dice.Text = Dane.sumaOczek.ToString();
                 DrawChart();
             }
-            Dane.button = true;
-            Dane.now = DateTime.Now;
-            Accelerometer.ShakeDetected += Accelerometer_ShakeDetected;
-            Accelerometer.Start(SensorSpeed.UI);
-
+        }
+        protected override void OnAppearing() 
+        {
+            if(Dane.start == false)
+            {
+                Dice.Text = Dane.sumaOczek.ToString();
+                DrawChart();
+                base.OnAppearing();
+            }
+            
         }
         void DrawChart()
         {
@@ -74,7 +81,7 @@ namespace DiceStats
         {
             var then = new TimeSpan(Dane.now.Ticks);
             Console.WriteLine(then);
-            then = then.Add(TimeSpan.FromSeconds(3));
+            then = then.Add(TimeSpan.FromSeconds(5));
             var now = TimeSpan.FromTicks(DateTime.Now.Ticks);
             if (now > then)
             {
@@ -84,14 +91,14 @@ namespace DiceStats
                 Dane.oczka[(dice1 + dice2 - 2)] = Dane.oczka[(dice1 + dice2 - 2)] + 1;
                 Dane.sumaOczek = dice1 + dice2;
                 Dane.now = DateTime.Now;
-                Accelerometer.Stop();
+                //Accelerometer.Stop();
                 await Navigation.PushModalAsync(new DiceRoll());
             }
             
         }
         async private void Button_Clicked(object sender, EventArgs e)
         {
-            if(Dane.button == true)
+            if (Dane.button == true)
             {
                 var rand = new Random();
                 int dice1 = rand.Next(1, 7);
@@ -100,9 +107,11 @@ namespace DiceStats
                 Dane.oczka[(dice1 + dice2 - 2)] = Dane.oczka[(dice1 + dice2 - 2)] + 1;
                 Dane.sumaOczek = dice1 + dice2;
                 Dane.button = false;
-                Accelerometer.Stop();
+                Dane.now = DateTime.Now;
+                //Accelerometer.Stop();
                 await Navigation.PushModalAsync(new DiceRoll());
             }
+            //await Navigation.PushModalAsync(new DiceRoll());
         }
     }
 }

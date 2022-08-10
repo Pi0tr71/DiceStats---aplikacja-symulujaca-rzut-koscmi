@@ -19,7 +19,15 @@ namespace DiceStats
 
         async void animationView_OnFinishedAnimation(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new MainPage());
+            Dane.button = true;
+            Dane.now = DateTime.Now;
+            await Navigation.PopModalAsync();
+            //await Navigation.PushModalAsync(MainPage());
         }
+        //protected async override void OnDisappearing()
+        //{
+        //    base.OnDisappearing();
+        //    await Navigation.PopModalAsync();
+        //}
     }
 }
