@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DiceStats.MainPage"
+             xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"  
              xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms">
 
     <StackLayout Background="white">

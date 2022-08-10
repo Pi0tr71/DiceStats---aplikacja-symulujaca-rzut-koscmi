@@ -16,13 +16,24 @@ namespace DiceStats
         public MainPage()
         {
             InitializeComponent();
-            var OczkaDefault = new int[11] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            var Kolory = new string[11] { "d44de1", "#da2ea2", "df0e62", "e63d4d", "fac70b", "c0b329", "869f46", "4c8b64", "127681", "1a4766", "21174a" };
-            Dane.oczka = OczkaDefault;
-            Dane.kolory = Kolory;
+            if (Dane.start == true)
+            {
+                var OczkaDefault = new int[11] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                Dane.oczka = OczkaDefault;
+                Dane.start = false;
+                var Kolory = new string[11] { "d44de1", "#da2ea2", "df0e62", "e63d4d", "fac70b", "c0b329", "869f46", "4c8b64", "127681", "1a4766", "21174a" };
+                Dane.kolory = Kolory;
+            }
+            else
+            {
+                Dice.Text = Dane.sumaOczek.ToString();
+                DrawChart();
+            }
+            Dane.button = true;
             Dane.now = DateTime.Now;
             Accelerometer.ShakeDetected += Accelerometer_ShakeDetected;
             Accelerometer.Start(SensorSpeed.UI);
+
         }
         void DrawChart()
         {
@@ -59,32 +70,39 @@ namespace DiceStats
             chartViewBar.Chart = new BarChart { Entries = DataList, Margin = 40, BarAreaAlpha = 80, ValueLabelOrientation = Orientation.Horizontal, LabelOrientation = Orientation.Horizontal, LabelTextSize = 53 };
             chartViewPie.Chart = new PieChart { Entries = DataList2, HoleRadius = 0.25f, LabelTextSize = 45 };
         }
-        void Accelerometer_ShakeDetected(object sender, EventArgs e)
+        async private void Accelerometer_ShakeDetected(object sender, EventArgs e)
         {
             var then = new TimeSpan(Dane.now.Ticks);
             Console.WriteLine(then);
-            then = then.Add(TimeSpan.FromSeconds(5));
+            then = then.Add(TimeSpan.FromSeconds(3));
             var now = TimeSpan.FromTicks(DateTime.Now.Ticks);
             if (now > then)
             {
                 var rand = new Random();
                 int dice1 = rand.Next(1, 7);
                 int dice2 = rand.Next(1, 7);
-                Dice.Text = (dice1 + dice2).ToString();
                 Dane.oczka[(dice1 + dice2 - 2)] = Dane.oczka[(dice1 + dice2 - 2)] + 1;
-                DrawChart();
+                Dane.sumaOczek = dice1 + dice2;
                 Dane.now = DateTime.Now;
+                Accelerometer.Stop();
+                await Navigation.PushModalAsync(new DiceRoll());
             }
             
         }
-        private void Button_Clicked(object sender, EventArgs e)
+        async private void Button_Clicked(object sender, EventArgs e)
         {
-            var rand = new Random();
-            int dice1 = rand.Next(1, 7);
-            int dice2 = rand.Next(1, 7);
-            Dice.Text = (dice1 + dice2).ToString();
-            Dane.oczka[(dice1 + dice2 - 2)] = Dane.oczka[(dice1 + dice2 - 2)] + 1;
-            DrawChart();
+            if(Dane.button == true)
+            {
+                var rand = new Random();
+                int dice1 = rand.Next(1, 7);
+                int dice2 = rand.Next(1, 7);
+                //Console.WriteLine((dice1 + dice2).ToString()); //cw
+                Dane.oczka[(dice1 + dice2 - 2)] = Dane.oczka[(dice1 + dice2 - 2)] + 1;
+                Dane.sumaOczek = dice1 + dice2;
+                Dane.button = false;
+                Accelerometer.Stop();
+                await Navigation.PushModalAsync(new DiceRoll());
+            }
         }
     }
 }
