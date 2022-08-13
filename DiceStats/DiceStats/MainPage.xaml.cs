@@ -19,8 +19,7 @@ namespace DiceStats
             if (Dane.start == true)
             {
                 var OczkaDefault = new int[11] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-                Dane.oczka = OczkaDefault;
-                Dane.start = false;
+                Dane.oczka = OczkaDefault; 
                 var Kolory = new string[11] { "d44de1", "#da2ea2", "df0e62", "e63d4d", "fac70b", "c0b329", "869f46", "4c8b64", "127681", "1a4766", "21174a" };
                 Dane.kolory = Kolory;
                 Accelerometer.ShakeDetected += Accelerometer_ShakeDetected;

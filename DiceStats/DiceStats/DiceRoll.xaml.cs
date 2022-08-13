@@ -19,6 +19,7 @@ namespace DiceStats
 
         async void animationView_OnFinishedAnimation(object sender, EventArgs e)
         {
+            Dane.start = false;
             Dane.button = true;
             Dane.now = DateTime.Now;
             await Navigation.PopModalAsync();
