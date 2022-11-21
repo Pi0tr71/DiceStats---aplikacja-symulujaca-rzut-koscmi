@@ -1,0 +1,11 @@
+splash screen (loading screen)
+database 
+android bar color
+Players on start
+Queue on start
+Players stats
+Games stats
+better interface
+Charts bugs 
+icon
+settings

@@ -12,5 +12,6 @@ namespace DiceStats
         public static int sumaOczek;
         public static bool start = true;
         public static bool button = true;
+        public static bool vibration = true;
     }
 }

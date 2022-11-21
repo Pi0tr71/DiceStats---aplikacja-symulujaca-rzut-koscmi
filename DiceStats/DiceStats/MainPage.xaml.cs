@@ -13,6 +13,7 @@ namespace DiceStats
 {
     public partial class MainPage : ContentPage
     {
+        bool PageOpenAnimation = false;
         public MainPage()
         {
             InitializeComponent();
@@ -91,7 +92,7 @@ namespace DiceStats
                 Dane.sumaOczek = dice1 + dice2;
                 Dane.now = DateTime.Now;
                 //Accelerometer.Stop();
-                await Navigation.PushModalAsync(new DiceRoll());
+                await Navigation.PushModalAsync(new DiceRoll(), PageOpenAnimation);
             }
             
         }
@@ -108,7 +109,7 @@ namespace DiceStats
                 Dane.button = false;
                 Dane.now = DateTime.Now;
                 //Accelerometer.Stop();
-                await Navigation.PushModalAsync(new DiceRoll());
+                await Navigation.PushModalAsync(new DiceRoll(), PageOpenAnimation);
             }
             //await Navigation.PushModalAsync(new DiceRoll());
         }
